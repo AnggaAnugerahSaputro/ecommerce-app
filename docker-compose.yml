@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  ecommerce-app:
+    build: .
+    ports:
+      - "2000:2000"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/appecommerce
+      - SPRING_DATASOURCE_USERNAME=ecommerce
+      - SPRING_DATASOURCE_PASSWORD=passwordecommerceapp
+      - SPRING_PROFILES_ACTIVE=development
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=appecommerce
+      - POSTGRES_USER=ecommerce
+      - POSTGRES_PASSWORD=passwordecommerceapp
+    volumes:
+      - ecommerce_data:/var/lib/postgresql/data
+
+volumes:
+  ecommerce_data:
