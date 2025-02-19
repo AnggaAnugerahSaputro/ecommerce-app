@@ -11,31 +11,26 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "product_category")
+@Table(name = "carts")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductCategory {
+public class Cart {
 
-    @EmbeddedId
-    private ProductCategoryId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id")
+    private Long cartId;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @Embeddable
-    @Data
-    public static class ProductCategoryId {
-        @Column(name = "product_id")
-        private Long productId;
-        @Column(name = "category_id")
-        private Long categoryId;
-    }
-
 }

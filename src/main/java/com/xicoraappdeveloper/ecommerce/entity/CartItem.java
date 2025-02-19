@@ -8,29 +8,36 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "category")
+@Table(name = "cart_items")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long categoryId;
+    @Column(name = "cart_item_id")
+    private Long cartItemId;
+
+    @Column(name = "cart_id", nullable = false)
+    private Long cartId;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
     @Column(nullable = false)
-    private String name;
+    private Integer quantity;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
